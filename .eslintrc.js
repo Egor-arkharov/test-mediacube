@@ -10,5 +10,6 @@ module.exports = {
   },
   rules: {
     "vue/no-multiple-template-root": "off",
+    'vue/singleline-html-element-content-newline': 'off' 
   },
 };

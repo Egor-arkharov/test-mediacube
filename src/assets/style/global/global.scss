@@ -16,8 +16,17 @@ body {
 	min-width: 320px;
 	min-height: 100svh;
 
-	background-color: $black-color;
-	color: $white-color;
+	background: linear-gradient(
+		to left,
+		#F0C3FC 0%,
+		#D7BEFC 20%,
+		#BCB1FC 40%,
+		#A1AEFC 60%,
+		#94BDFC 80%,
+		#8EC5FC 100%
+	);
+	
+	color: $color-white;
 
 	display: flex;
 	justify-content: center;
