@@ -1,49 +1,50 @@
 <template>
   <section class="todo wrapper">
-    <p class="todo__title">Today I&nbsp;need&nbsp;to</p>
+    <div class="todo__inner">
+      <p class="todo__title">Today I&nbsp;need&nbsp;to</p>
 
-    <form
-      class="todo__form form"
-    >
-      <input 
-        class="form__input" 
-        type="text" 
-        placeholder="Add new todo..."
-      >
-      <button
-        class="form__button btn"
-      >
-        Submit
-      </button>
-    </form>
+      <todo-form />
+      <todo-list />
 
+      <div class="todo__cards cards">
+        <div class="cards__item">
+          <p class="cards__number">3 tasks</p>
+          <p class="cards__text">Completed</p>
+          <div class="cards__process" />
+        </div>
 
-    <div class="todo__cards cards">
-      <div class="cards__item">
-        <p class="cards__number">3 tasks</p>
-        <p class="cards__text">Completed</p>
-        <div class="cards__process" />
+        <div class="cards__item">
+          <p class="cards__number">0 tasks</p>
+          <p class="cards__text">To be finished</p>
+          <div class="cards__process" />
+        </div>
       </div>
 
-      <div class="cards__item">
-        <p class="cards__number">0 tasks</p>
-        <p class="cards__text">To be finished</p>
-        <div class="cards__process" />
+      <div class="todo__bullets bullets">
+        <button class="bullets__button">Check all</button>
+        <button class="bullets__button active">All</button>
+        <button class="bullets__button">Active</button>
+        <button class="bullets__button">Complited</button>
+        <button class="bullets__button">Clear complited</button>
       </div>
+
+
+      <p class="todo__check">Congrat, you have no&nbsp;more tasks to&nbsp;do</p>
     </div>
-
-    <div class="todo__bullets bullets">
-      <button class="bullets__button">Check all</button>
-      <button class="bullets__button active">All</button>
-      <button class="bullets__button">Active</button>
-      <button class="bullets__button">Complited</button>
-      <button class="bullets__button">Clear complited</button>
-    </div>
-
-
-    <p class="todo__check">Congrat, you have no&nbsp;more tasks to&nbsp;do</p>
   </section>
 </template>
+
+<script>
+import TodoList from '../components/TodoList';
+import TodoForm from '../components/TodoForm';
+
+export default {
+  components: {
+    TodoList,
+    TodoForm
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 .wrapper {
@@ -53,7 +54,7 @@
   position: relative;
 
   width: 50%;
-  height: 80svh;
+  height: 90svh;
 
   color: $color-black;
   background-color: $color-white;
@@ -85,6 +86,15 @@
 }
 
 .todo {
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 30vw;
+    max-width: 400px;
+  }
+
   &__title {
     font-family: $main-font-black;
     font-size: 24px;
@@ -120,55 +130,6 @@
       background-position: center;
       background-size: contain;
       background-repeat: no-repeat;
-    }
-  }
-}
-
-.form {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 50px;
-
-  &__input {
-    font-family: $main-font;
-
-    width: 300px;
-    padding: 10px 15px;
-
-    color: $color-black;
-    border: 2px solid $color-grey-2;
-    border-radius: 10px;
-    outline: none;
-
-    &::placeholder {
-      color: $color-grey;
-    }
-  }
-
-  &__button {
-    font-family: $main-font-bold;
-    font-size: 13px;
-    line-height: 1.2;
-
-    padding: 15px;
-
-    color: $color-white;
-    background-color: $color-blue;
-    border: 2px solid $color-blue;
-    border-radius: 10px;
-
-    transition: all 0.2s ease;
-
-    @include hover {
-      background-color: darken($color-blue, 20%);
-      border-color: darken($color-blue, 20%);
-    }
-
-    &:focus,
-    &:active {
-      color: $color-blue;
-      background-color: $color-white;
-      border-color: $color-blue;
     }
   }
 }
