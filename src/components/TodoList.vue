@@ -1,7 +1,7 @@
 <template>
   <div class="tasks">
     <draggable
-      v-model="list"
+      v-model="tasks"
       tag="ul"
       class="tasks__list"
       :item-key="(item) => item.id"
@@ -28,21 +28,36 @@
             :name="'answer-' + element.id"
           >
 
-          <input 
-            class="task__input" 
-            type="text" 
+          <input
+            v-if="editTaskId === element.id"
+            v-model="editTaskName"
+            class="task__input edited"
+            type="text"
+            @blur="saveEditTask(element.id)"
+          >
+          <input
+            v-else
+            class="task__input"
+            type="text"
             :placeholder="element.name"
+            readonly
           >
 
           <div class="task__btns">
-            <button class="btn btn-edit task__edit">
+            <button
+              class="btn btn-edit task__edit"
+              @click="editTask(element.id, element.name)"
+            >
               <inline-svg
                 :src="require(`@/assets/icons/edit.svg`)"
                 width="16"
                 height="16"
               />
             </button>
-            <button class="btn btn-delete task__delete">
+            <button
+              class="btn btn-delete task__delete"
+              @click="deleteTask(element.id)"
+            >
               <inline-svg
                 :src="require(`@/assets/icons/delete.svg`)"
                 width="16"
@@ -57,24 +72,46 @@
 </template>
 
 <script>
-import draggable from "vuedraggable";
-import InlineSvg from "vue-inline-svg";
+import { ref, computed } from 'vue';
+import { useStore } from 'vuex';
+import draggable from 'vuedraggable';
+import InlineSvg from 'vue-inline-svg';
 
 export default {
   components: {
     draggable,
     InlineSvg,
   },
-  data() {
+  setup() {
+    const store = useStore();
+    const tasks = computed(() => store.getters.getTasks);
+
+    const editTaskId = ref(null);
+    const editTaskName = ref('');
+
+    const editTask = (id, name) => {
+      editTaskId.value = id;
+      editTaskName.value = name;
+    };
+
+    const saveEditTask = (id) => {
+      if (editTaskId.value === id && editTaskName.value.trim()) {
+        store.dispatch('editTask', { id, newName: editTaskName.value });
+        editTaskId.value = null;
+      }
+    };
+
+    const deleteTask = (taskId) => {
+      store.dispatch('deleteTask', taskId);
+    };
+
     return {
-      list: [
-        { name: "11111111111111", text: "", id: 0 },
-        { name: "22222222222222", text: "", id: 1 },
-        { name: "33333333333333", text: "", id: 2 },
-        { name: "44444444444444", text: "", id: 3 },
-        { name: "55555555555555", text: "", id: 4 },
-        { name: "66666666666666", text: "", id: 5 },
-      ],
+      tasks,
+      editTaskId,
+      editTaskName,
+      editTask,
+      saveEditTask,
+      deleteTask,
     };
   },
 };
@@ -134,13 +171,36 @@ export default {
     justify-content: center;
     align-items: center;
     cursor: grab;
+
+    // svg :deep(path) {
+    //   fill: rgba($color-black, 0.3);
+    // }
+
+    // @include hover {
+    //   svg :deep(path) circle {
+    //     fill: $color-black;
+    //   }
+    // }
   }
 
   &__input {
-    border: none;
+    border: 2px solid transparent;
     pointer-events: none;
     flex-grow: 1;
     margin-right: 15px;
+    padding: 2px 5px;
+
+    &::placeholder {
+      font-size: 14px;
+      line-height: 1.2;
+      color: $color-black;
+    }
+
+    &:focus,
+    &.edited {
+      pointer-events: auto;
+      border-color: rgba($color-black, 0.3);
+    }
   }
 
   &__btns {
@@ -154,6 +214,7 @@ export default {
   &__delete {
   }
 }
+
 .checkbox {
   &__label {
     margin: 0;

@@ -6,7 +6,7 @@
       <todo-form />
       <todo-list />
 
-      <div class="todo__cards cards">
+      <!-- <div class="todo__cards cards">
         <div class="cards__item">
           <p class="cards__number">3 tasks</p>
           <p class="cards__text">Completed</p>
@@ -29,7 +29,7 @@
       </div>
 
 
-      <p class="todo__check">Congrat, you have no&nbsp;more tasks to&nbsp;do</p>
+      <p class="todo__check">Congrat, you have no&nbsp;more tasks to&nbsp;do</p> -->
     </div>
   </section>
 </template>

@@ -1,8 +1,10 @@
 <template>
   <form
     class="todo__form form"
+    @submit.prevent="submitTask"
   >
     <input 
+      v-model="newTask"
       class="form__input" 
       type="text" 
       placeholder="Add new todo..."
@@ -15,8 +17,33 @@
   </form>
 </template>
 
-<style lang="scss" scoped>
+<script>
+import { ref } from 'vue';
+import { useStore } from 'vuex';
 
+export default {
+  setup() {
+    const store = useStore();
+    const newTask = ref('');
+
+    const submitTask = () => {
+      if (newTask.value.trim()) {
+        console.log(newTask.value);
+
+        store.dispatch('addTask', {
+          name: newTask.value,
+          id: Date.now(),
+        });
+        newTask.value = '';
+      }
+    };
+
+    return { newTask, submitTask };
+  },
+};
+</script>
+
+<style lang="scss" scoped>
 .form {
   display: flex;
   justify-content: space-between;
