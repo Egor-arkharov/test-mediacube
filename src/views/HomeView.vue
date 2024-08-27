@@ -6,43 +6,45 @@
       <todo-form />
       <todo-list />
 
-      <!-- <div class="todo__cards cards">
-        <div class="cards__item">
-          <p class="cards__number">3 tasks</p>
-          <p class="cards__text">Completed</p>
-          <div class="cards__process" />
-        </div>
+      <todo-cards v-if="tasks.length !== 0" />
+      <todo-bullets v-if="tasks.length !== 0" />
 
-        <div class="cards__item">
-          <p class="cards__number">0 tasks</p>
-          <p class="cards__text">To be finished</p>
-          <div class="cards__process" />
-        </div>
-      </div>
-
-      <div class="todo__bullets bullets">
-        <button class="bullets__button">Check all</button>
-        <button class="bullets__button active">All</button>
-        <button class="bullets__button">Active</button>
-        <button class="bullets__button">Complited</button>
-        <button class="bullets__button">Clear complited</button>
-      </div>
-
-
-      <p class="todo__check">Congrat, you have no&nbsp;more tasks to&nbsp;do</p> -->
+      <p
+        v-if="tasks.length === 0"
+        class="todo__check"
+      >
+        Congrat, you have no&nbsp;more tasks to&nbsp;do
+      </p>
     </div>
   </section>
 </template>
 
 <script>
+import { computed } from 'vue';
+import { useStore } from 'vuex';
 import TodoList from '../components/TodoList';
 import TodoForm from '../components/TodoForm';
+import TodoCards from '../components/TodoCards';
+import TodoBullets from '../components/TodoBullets';
 
 export default {
   components: {
     TodoList,
-    TodoForm
+    TodoForm,
+    TodoCards,
+    TodoBullets
   },
+  setup() {
+    const store = useStore();
+    const tasks = computed(() => store.getters.getTasks);
+
+    const filteredTasks = computed(() => store.getters.getFilteredTasks);
+
+    return {
+      tasks,
+      filteredTasks
+    }
+  }
 };
 </script>
 
@@ -90,9 +92,9 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     width: 30vw;
     max-width: 400px;
+    height: 100%;
   }
 
   &__title {
@@ -134,70 +136,5 @@ export default {
   }
 }
 
-.cards {
-  display: flex;
-  gap: 32px;
-
-  &__item {
-    display: flex;
-    flex-direction: column;
-
-    width: 200px;
-
-    padding: 10px 15px;
-    background-color: rgba($color-black, 5%);
-    border-radius: 10px;
-  }
-
-  &__number {
-    font-family: $main-font-bold;
-    font-size: 12px;
-    line-height: 1.2;
-
-    margin-bottom: 8px;
-
-    color: $color-grey;
-  }
-
-  &__text {
-    font-family: $main-font-black;
-    font-size: 14px;
-    line-height: 1.2;
-
-    margin-bottom: 25px;
-
-    color: $color-black;
-  }
-
-  &__process {
-
-  }
-}
-
-.bullets {
-  display: flex;
-  gap: 16px;
-  margin-top: auto;
-
-  &__button {
-    font-family: $main-font-bold;
-    font-size: 14px;
-    line-height: 1.2;
-
-    padding: 15px;
-    color: $color-black;
-
-    // background-color: $color-blue;
-    // border: 2px solid $color-blue;
-    border-radius: 10px;
-
-    // transition: all 0.2s ease;
-
-    &.active {
-      color: $color-white;
-      background-color: $color-blue;
-    }
-  }
-}
 </style>
 

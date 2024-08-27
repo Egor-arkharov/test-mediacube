@@ -25,15 +25,18 @@
             class="checkbox__input"
             type="checkbox"
             :value="element.id"
-            :name="'answer-' + element.id"
+            :checked="element.completed"
+            @change="toggleTaskCompletion(element.id)"
           >
 
           <input
             v-if="editTaskId === element.id"
+            ref="editableInput"
             v-model="editTaskName"
             class="task__input edited"
             type="text"
             @blur="saveEditTask(element.id)"
+            @keydown.enter="saveEditTask(element.id)"
           >
           <input
             v-else
@@ -72,7 +75,7 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, nextTick, computed } from 'vue';
 import { useStore } from 'vuex';
 import draggable from 'vuedraggable';
 import InlineSvg from 'vue-inline-svg';
@@ -84,14 +87,21 @@ export default {
   },
   setup() {
     const store = useStore();
-    const tasks = computed(() => store.getters.getTasks);
+    const tasks = computed(() => store.getters.getFilteredTasks);
+    const completedTasks = computed(() => store.getters.getCompletedTasks);
 
     const editTaskId = ref(null);
     const editTaskName = ref('');
+    const editableInput = ref(null);
 
     const editTask = (id, name) => {
       editTaskId.value = id;
       editTaskName.value = name;
+      nextTick(() => {
+        if (editableInput.value) {
+          editableInput.value.focus();
+        }
+      });
     };
 
     const saveEditTask = (id) => {
@@ -105,13 +115,20 @@ export default {
       store.dispatch('deleteTask', taskId);
     };
 
+    const toggleTaskCompletion = (taskId) => {
+      store.dispatch('toggleTaskCompletion', taskId);
+    };
+
     return {
       tasks,
+      completedTasks,
       editTaskId,
       editTaskName,
+      editableInput,
       editTask,
       saveEditTask,
       deleteTask,
+      toggleTaskCompletion,
     };
   },
 };

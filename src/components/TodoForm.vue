@@ -28,8 +28,6 @@ export default {
 
     const submitTask = () => {
       if (newTask.value.trim()) {
-        console.log(newTask.value);
-
         store.dispatch('addTask', {
           name: newTask.value,
           id: Date.now(),
