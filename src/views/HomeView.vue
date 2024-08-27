@@ -7,7 +7,7 @@
       <todo-list />
 
       <todo-cards v-if="tasks.length !== 0" />
-      <todo-bullets v-if="tasks.length !== 0" />
+      <todo-tools v-if="tasks.length !== 0" />
 
       <p
         v-if="tasks.length === 0"
@@ -25,14 +25,14 @@ import { useStore } from 'vuex';
 import TodoList from '../components/TodoList';
 import TodoForm from '../components/TodoForm';
 import TodoCards from '../components/TodoCards';
-import TodoBullets from '../components/TodoBullets';
+import TodoTools from '../components/TodoTools';
 
 export default {
   components: {
     TodoList,
     TodoForm,
     TodoCards,
-    TodoBullets
+    TodoTools
   },
   setup() {
     const store = useStore();

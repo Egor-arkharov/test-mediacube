@@ -87,6 +87,7 @@ export default {
   },
   setup() {
     const store = useStore();
+    
     const tasks = computed(() => store.getters.getFilteredTasks);
     const completedTasks = computed(() => store.getters.getCompletedTasks);
 
@@ -141,7 +142,7 @@ export default {
 
   width: calc(100% + 16px);
   translate: -8px 0;
-  max-height: 100px;
+  height: 100px;
   overflow: hidden auto;
   padding-right: 10px;
 
@@ -174,8 +175,6 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 15px;
-  }
-  &__task {
   }
 }
 
@@ -224,24 +223,12 @@ export default {
     display: flex;
     gap: 10px;
   }
-
-  &__edit {
-  }
-
-  &__delete {
-  }
 }
 
 .checkbox {
   &__label {
     margin: 0;
     padding-left: 8px;
-  }
-  &__input {
-  }
-  &__box {
-  }
-  &__text {
   }
 }
 

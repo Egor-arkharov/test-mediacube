@@ -8,8 +8,11 @@
       class="form__input" 
       type="text" 
       placeholder="Add new todo..."
+      @focus="inputFocus = true"
+      @blur="inputFocus = false"
     >
     <button
+      v-if="inputFocus"
       class="form__button btn"
     >
       Submit
@@ -25,6 +28,7 @@ export default {
   setup() {
     const store = useStore();
     const newTask = ref('');
+    const inputFocus = ref(false);
 
     const submitTask = () => {
       if (newTask.value.trim()) {
@@ -36,7 +40,11 @@ export default {
       }
     };
 
-    return { newTask, submitTask };
+    return { 
+      newTask, 
+      inputFocus,
+      submitTask
+    };
   },
 };
 </script>
@@ -46,13 +54,15 @@ export default {
   display: flex;
   justify-content: space-between;
   gap: 16px;
+
+  width: 100%;
+  height: 50px;
   margin-bottom: 50px;
 
   &__input {
     font-family: $main-font;
 
-    width: 30vw;
-    max-width: 300px;
+    width: 100%;
     padding: 10px 15px;
 
     color: $color-black;
