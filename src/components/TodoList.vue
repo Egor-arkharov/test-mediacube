@@ -1,7 +1,7 @@
 <template>
   <div class="tasks">
     <draggable
-      v-model="tasks"
+      v-model="localTasks"
       tag="ul"
       class="tasks__list"
       :item-key="(item) => item.id"
@@ -88,7 +88,16 @@ export default {
   setup() {
     const store = useStore();
     
-    const tasks = computed(() => store.getters.getFilteredTasks);
+    // const tasks = computed(() => store.getters.getFilteredTasks);
+
+    const localTasks = computed({
+      get: () => store.getters.getFilteredTasks,
+      set: (tasks) => {
+        // Update the task order in the store
+        store.dispatch('updateTaskOrder', tasks);
+      }
+    });
+
     const completedTasks = computed(() => store.getters.getCompletedTasks);
 
     const editTaskId = ref(null);
@@ -121,7 +130,7 @@ export default {
     };
 
     return {
-      tasks,
+      localTasks,
       completedTasks,
       editTaskId,
       editTaskName,

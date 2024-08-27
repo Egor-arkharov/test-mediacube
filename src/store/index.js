@@ -39,6 +39,9 @@ export default createStore({
     setFilter(state, newFilter) {
       state.filter = newFilter;
     },
+    setTaskOrder(state, tasks) {
+      state.tasks = tasks;
+    },
   },
   actions: {
     addTask({ commit }, task) {
@@ -62,6 +65,9 @@ export default createStore({
     },
     changeFilter({ commit }, newFilter) {
       commit('setFilter', newFilter);
+    },
+    updateTaskOrder({ commit }, tasks) {
+      commit('setTaskOrder', tasks);
     },
   },
   getters: {
