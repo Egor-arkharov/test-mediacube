@@ -32,7 +32,7 @@
     <button
       v-if="complitedTasks.length > 0"
       class="bullets__button"
-      @click="clearComplitedTasks"
+      @click="deleteComplitedTasks"
     >
       Clear complited
     </button>
@@ -66,8 +66,8 @@ export default {
       store.dispatch('checkAllTasks');
     };
 
-    const clearComplitedTasks = () => {
-      store.dispatch('clearComplitedTasks');
+    const deleteComplitedTasks = () => {
+      store.dispatch('deleteComplitedTasks');
     };
 
     return {
@@ -76,7 +76,7 @@ export default {
       activeTasks,
       changeFilter,
       checkAllTasks,
-      clearComplitedTasks,
+      deleteComplitedTasks,
     };
   },
 };

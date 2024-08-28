@@ -131,6 +131,7 @@ export default {
 
     padding-left: 29px;
     margin-top: auto;
+    margin-bottom: 10px;
 
     color: $color-grey;
 
@@ -169,6 +170,5 @@ export default {
     }
   }
 }
-
 </style>
 

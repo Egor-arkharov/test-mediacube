@@ -195,9 +195,6 @@ export default {
     height: auto;
     min-height: auto;
     margin: 30px 0 0;
-  }
-
-  @media (max-width: #{map-get($breakpoints, 'xs')}) {
     width: 100%;
     translate: 0;
   }
@@ -212,16 +209,6 @@ export default {
     justify-content: center;
     align-items: center;
     cursor: grab;
-
-    // svg :deep(path) {
-    //   fill: rgba($color-black, 0.3);
-    // }
-
-    // @include hover {
-    //   svg :deep(path) circle {
-    //     fill: $color-black;
-    //   }
-    // }
   }
 
   &__input {
