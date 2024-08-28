@@ -11,13 +11,5 @@ module.exports = {
   rules: {
     "vue/no-multiple-template-root": "off",
     'vue/singleline-html-element-content-newline': 'off',
-    // 'vue/max-attributes-per-line': ["error", {
-    //   'singleline': {
-    //     'max': 10
-    //   },
-    //   'multiline': {
-    //     'max': 10
-    //   }
-    // }]
   },
 };

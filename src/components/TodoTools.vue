@@ -96,12 +96,7 @@ export default {
     padding: 10px 12px;
     color: $color-black;
     white-space: nowrap;
-
-    // background-color: $color-blue;
-    // border: 2px solid $color-blue;
     border-radius: 10px;
-
-    // transition: all 0.2s ease;
 
     &.active {
       color: $color-white;
