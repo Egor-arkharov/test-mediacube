@@ -159,9 +159,6 @@ export default {
 
 <style lang="scss" scoped>
 .tasks {
-  $scrollbar-bc: rgba($color-black, 0.1);
-  $scrollbar-thumb-bc: $color-black;
-
   width: calc(100% + 16px);
   translate: -8px 0;
   height: 100px;
@@ -169,29 +166,7 @@ export default {
   overflow: hidden auto;
   padding-right: 10px;
 
-  @supports selector(::-webkit-scrollbar) {
-    &::-webkit-scrollbar {
-      width: 4px;
-      border-radius: 10px;
-      background-color: $scrollbar-bc;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      border-radius: 10px;
-      background-color: $scrollbar-thumb-bc;
-      cursor: pointer;
-
-      @include hover {
-        background-color: rgba($scrollbar-thumb-bc, 0.6);
-      }
-    }
-  }
-
-  @supports not selector(::-webkit-scrollbar) {
-    cursor: pointer;
-    scrollbar-width: thin;
-    scrollbar-color: $scrollbar-thumb-bc $scrollbar-bc;
-  }
+  @include custom-scrollbar;
 
   &__loader {
     font-family: $main-font-bold;

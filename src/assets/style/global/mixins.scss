@@ -5,3 +5,29 @@
 		}
 	}
 }
+
+@mixin custom-scrollbar {
+  @supports selector(::-webkit-scrollbar) {
+    &::-webkit-scrollbar {
+      width: 4px;
+      border-radius: 10px;
+      background-color: $scrollbar-bc;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-color: $scrollbar-thumb-bc;
+      cursor: pointer;
+
+      @include hover {
+        background-color: rgba($scrollbar-thumb-bc, 0.6);
+      }
+    }
+  }
+
+	@supports not selector(::-webkit-scrollbar) {
+    cursor: pointer;
+    scrollbar-width: thin;
+    scrollbar-color: $scrollbar-thumb-bc $scrollbar-bc;
+  }
+}

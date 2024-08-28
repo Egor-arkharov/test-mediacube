@@ -88,7 +88,7 @@ const actions = {
     } catch (error) {
       console.error("Error loading tasks:", error);
     } finally {
-      commit("setLoading", false); // Отключаем лоадер
+      commit("setLoading", false);
     }
   },
 

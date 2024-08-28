@@ -72,6 +72,8 @@ export default {
   padding-left: 12px;
   padding-right: 12px;
 
+  overflow: hidden;
+
   &::before {
     content: "";
     position: absolute;
@@ -131,7 +133,6 @@ export default {
 
     padding-left: 29px;
     margin-top: auto;
-    margin-bottom: 10px;
 
     color: $color-grey;
 
@@ -153,6 +154,16 @@ export default {
     }
   }
 
+  @media (max-width: #{map-get($breakpoints, 'md')}), (max-height: 900px) {
+    &__inner {
+      overflow: hidden auto;
+      max-width: unset;
+      width: 90%;
+
+      @include custom-scrollbar;
+    }
+  }
+
   @media (max-width: #{map-get($breakpoints, 'md')}) {
     &__inner {
       width: 100%;
@@ -162,13 +173,7 @@ export default {
       margin-bottom: 30px;
     }
   }
-
-  @media (max-width: #{map-get($breakpoints, 'sm')}) {
-    &__inner {
-      overflow: hidden auto;
-      max-width: unset;
-    }
-  }
 }
+
 </style>
 
