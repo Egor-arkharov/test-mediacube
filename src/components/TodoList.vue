@@ -1,5 +1,11 @@
 <template>
   <div class="tasks">
+    <div
+      v-if="isLoading"
+      class="tasks__loader"
+    >
+      Loading...
+    </div>
     <draggable
       v-model="localTasks"
       tag="ul"
@@ -87,6 +93,8 @@ export default {
   },
   setup() {
     const store = useStore();
+
+    const isLoading = computed(() => store.getters.getLoading);
     
     const localTasks = computed({
       get: () => store.getters.getFilteredTasks,
@@ -134,6 +142,7 @@ export default {
     };
 
     return {
+      isLoading,
       localTasks,
       complitedTasks,
       editTaskId,
@@ -182,6 +191,17 @@ export default {
     cursor: pointer;
     scrollbar-width: thin;
     scrollbar-color: $scrollbar-thumb-bc $scrollbar-bc;
+  }
+
+  &__loader {
+    font-family: $main-font-bold;
+    margin: 0 auto;
+    width: fit-content;
+    padding-bottom: 5px;
+    font-size: clamp(18px, 3vw, 20px);
+    background: linear-gradient(currentColor 0 0) 0 100%/0% 3px no-repeat;
+    animation: line-size 2s linear infinite;
+    @keyframes line-size {to{background-size: 100% 3px}}
   }
 
   &__list {
