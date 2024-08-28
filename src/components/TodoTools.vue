@@ -14,6 +14,7 @@
       All
     </button>
     <button
+      v-if="activeTasks.length > 0"
       class="bullets__button"
       :class="{ active: filter === 'active' }"
       @click="changeFilter('active')"
@@ -21,18 +22,19 @@
       Active
     </button>
     <button
+      v-if="complitedTasks.length > 0"
       class="bullets__button"
-      :class="{ active: filter === 'completed' }"
-      @click="changeFilter('completed')"
+      :class="{ active: filter === 'complited' }"
+      @click="changeFilter('complited')"
     >
-      Completed
+      Complited
     </button>
     <button
-      v-if="completedTasks.length > 0"
+      v-if="complitedTasks.length > 0"
       class="bullets__button"
-      @click="clearCompletedTasks"
+      @click="clearComplitedTasks"
     >
-      Clear completed
+      Clear complited
     </button>
   </div>
 </template>
@@ -47,28 +49,34 @@ export default {
     const filter = computed(() => store.getters.getFilter);
 		const tasks = computed(() => store.getters.getTasks);
 
+
     const changeFilter = (newFilter) => {
       store.dispatch('changeFilter', newFilter);
     };
 
-    const completedTasks = computed(() =>
-      tasks.value.filter(task => task.completed)
+    const complitedTasks = computed(() =>
+      tasks.value.filter(task => task.complited)
+    );
+
+    const activeTasks = computed(() =>
+      tasks.value.filter(task => !task.complited)
     );
 
     const checkAllTasks = () => {
       store.dispatch('checkAllTasks');
     };
 
-    const clearCompletedTasks = () => {
-      store.dispatch('clearCompletedTasks');
+    const clearComplitedTasks = () => {
+      store.dispatch('clearComplitedTasks');
     };
 
     return {
       filter,
+      complitedTasks,
+      activeTasks,
       changeFilter,
-      completedTasks,
       checkAllTasks,
-      clearCompletedTasks,
+      clearComplitedTasks,
     };
   },
 };
@@ -104,6 +112,11 @@ export default {
 			color: $color-white;
       background-color: lighten($color-blue, 10%);
 		}
+  }
+
+  @media (max-width: #{map-get($breakpoints, 'xs')}) {
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
 </style>

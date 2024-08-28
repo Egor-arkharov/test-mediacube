@@ -1,8 +1,8 @@
 <template>
   <div class="todo__cards cards">
     <div class="cards__item">
-      <p class="cards__number">{{ completedTasks }} tasks</p>
-      <p class="cards__text">Completed</p>
+      <p class="cards__number">{{ complitedTasks }} tasks</p>
+      <p class="cards__text">Complited</p>
       <div class="cards__progress">
         <div
           class="cards__progress-inner cards__progress-inner--purple"
@@ -12,7 +12,7 @@
     </div>
 
     <div class="cards__item">
-      <p class="cards__number">{{ tasks.length - completedTasks }} tasks</p>
+      <p class="cards__number">{{ tasks.length - complitedTasks }} tasks</p>
       <p class="cards__text">To be finished</p>
       <div class="cards__progress">
         <div
@@ -32,16 +32,16 @@ export default {
   setup() {
     const store = useStore();
     const tasks = computed(() => store.getters.getTasks);
-    const completedTasks = computed(() => store.getters.getCompletedTasks);
+    const complitedTasks = computed(() => store.getters.getComplitedTasks);
 
     const progressWidth = computed(() => {
       if (tasks.value.length === 0) return 0;
-      return (completedTasks.value / tasks.value.length) * 100;
+      return (complitedTasks.value / tasks.value.length) * 100;
     });
 
     return {
       tasks,
-      completedTasks,
+      complitedTasks,
       progressWidth,
     };
   },
@@ -106,7 +106,17 @@ export default {
       background-color: $color-pink;
     }
   }
-}
 
+  @media (max-width: #{map-get($breakpoints, 'xs')}) {
+    flex-direction: column;
+    gap: 12px;
+
+    width: 100%;
+
+    &__item {
+      width: 100%;
+    }
+  }
+}
 </style>
 

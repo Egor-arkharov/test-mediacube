@@ -27,14 +27,14 @@ export default createStore({
     setTaskCompletion(state, taskId) {
       const task = state.tasks.find(task => task.id === taskId);
       if (task) {
-        task.completed = !task.completed;
+        task.complited = !task.complited;
       }
     },
     setAllChecked(state) {
-      state.tasks.forEach(task => task.completed = true);
+      state.tasks.forEach(task => task.complited = true);
     },
-    clearCompletedTasks(state) {
-      state.tasks = state.tasks.filter(task => !task.completed);
+    clearComplitedTasks(state) {
+      state.tasks = state.tasks.filter(task => !task.complited);
     },
     setFilter(state, newFilter) {
       state.filter = newFilter;
@@ -45,7 +45,7 @@ export default createStore({
   },
   actions: {
     addTask({ commit }, task) {
-      task.completed = false;
+      task.complited = false;
       commit('setTasks', task);
     },
     deleteTask({ commit }, taskId) {
@@ -60,8 +60,8 @@ export default createStore({
     checkAllTasks({ commit }) {
       commit('setAllChecked');
     },
-    clearCompletedTasks({ commit }) {
-      commit('clearCompletedTasks');
+    clearComplitedTasks({ commit }) {
+      commit('clearComplitedTasks');
     },
     changeFilter({ commit }, newFilter) {
       commit('setFilter', newFilter);
@@ -74,18 +74,18 @@ export default createStore({
     getTasks(state) {
       return state.tasks;
     },
-    getCompletedTasks(state) {
-      return state.tasks.filter(task => task.completed).length;
+    getComplitedTasks(state) {
+      return state.tasks.filter(task => task.complited).length;
     },
     getFilter(state) {
       return state.filter;
     },
     getFilteredTasks: (state) => {
       if (state.filter === 'active') {
-        return state.tasks.filter(task => !task.completed);
+        return state.tasks.filter(task => !task.complited);
       }
-      if (state.filter === 'completed') {
-        return state.tasks.filter(task => task.completed);
+      if (state.filter === 'complited') {
+        return state.tasks.filter(task => task.complited);
       }
       return state.tasks;
     },

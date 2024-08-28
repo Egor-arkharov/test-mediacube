@@ -25,7 +25,7 @@
             class="checkbox__input"
             type="checkbox"
             :value="element.id"
-            :checked="element.completed"
+            :checked="element.complited"
             @change="toggleTaskCompletion(element.id)"
           >
 
@@ -88,17 +88,14 @@ export default {
   setup() {
     const store = useStore();
     
-    // const tasks = computed(() => store.getters.getFilteredTasks);
-
     const localTasks = computed({
       get: () => store.getters.getFilteredTasks,
       set: (tasks) => {
-        // Update the task order in the store
         store.dispatch('updateTaskOrder', tasks);
       }
     });
 
-    const completedTasks = computed(() => store.getters.getCompletedTasks);
+    const complitedTasks = computed(() => store.getters.getComplitedTasks);
 
     const editTaskId = ref(null);
     const editTaskName = ref('');
@@ -127,11 +124,18 @@ export default {
 
     const toggleTaskCompletion = (taskId) => {
       store.dispatch('toggleTaskCompletion', taskId);
+
+      const currentFilter = store.getters.getFilter;
+      const filteredTasks = store.getters.getFilteredTasks;
+
+      if (filteredTasks.length === 0 && (currentFilter === 'active' || currentFilter === 'complited')) {
+        store.dispatch('changeFilter', 'all');
+      }
     };
 
     return {
       localTasks,
-      completedTasks,
+      complitedTasks,
       editTaskId,
       editTaskName,
       editableInput,
@@ -152,6 +156,7 @@ export default {
   width: calc(100% + 16px);
   translate: -8px 0;
   height: 100px;
+  min-height: 100px;
   overflow: hidden auto;
   padding-right: 10px;
 
@@ -179,11 +184,22 @@ export default {
     scrollbar-color: $scrollbar-thumb-bc $scrollbar-bc;
   }
 
-  
   &__list {
     display: flex;
     flex-direction: column;
     gap: 15px;
+  }
+
+  @media (max-width: #{map-get($breakpoints, 'sm')}) {
+    overflow: unset;
+    height: auto;
+    min-height: auto;
+    margin: 30px 0 0;
+  }
+
+  @media (max-width: #{map-get($breakpoints, 'xs')}) {
+    width: 100%;
+    translate: 0;
   }
 }
 

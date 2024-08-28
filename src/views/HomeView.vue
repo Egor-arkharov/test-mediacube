@@ -52,6 +52,7 @@ export default {
 .wrapper {
   --decor-size: 10vw;
   --py: 25px;
+  --decor-offset: 50px;
 
   position: relative;
 
@@ -66,8 +67,10 @@ export default {
   flex-direction: column;
   align-items: center;
 
-  padding-top: calc(var(--py) + var(--decor-size) + 50px);
+  padding-top: calc(var(--py) + var(--decor-size) + var(--decor-offset));
   padding-bottom: var(--py);
+  padding-left: 12px;
+  padding-right: 12px;
 
   &::before {
     content: "";
@@ -85,6 +88,20 @@ export default {
     background-size: contain;
     background-repeat: no-repeat;
   }
+
+  @media (max-width: #{map-get($breakpoints, 'lg')}) {
+    width: 80%;
+  }
+
+  @media (max-width: #{map-get($breakpoints, 'md')}) {
+    --decor-offset: 30px;
+  }
+
+  @media (max-width: #{map-get($breakpoints, 'xs')}) {
+    --decor-size: 20vw;
+    width: 95%;
+    height: 95svh;
+  }
 }
 
 .todo {
@@ -99,7 +116,7 @@ export default {
 
   &__title {
     font-family: $main-font-black;
-    font-size: 24px;
+    font-size: clamp(18px, 3vw, 24px);
     line-height: 1.2;
     color: $color-black;
     margin-bottom: 50px;
@@ -109,7 +126,7 @@ export default {
     position: relative;
 
     font-family: $main-font;
-    font-size: 14px;
+    font-size: clamp(12px, 3vw, 14px);
     line-height: 1.2;
 
     padding-left: 29px;
@@ -132,6 +149,23 @@ export default {
       background-position: center;
       background-size: contain;
       background-repeat: no-repeat;
+    }
+  }
+
+  @media (max-width: #{map-get($breakpoints, 'md')}) {
+    &__inner {
+      width: 100%;
+    }
+
+    &__title {
+      margin-bottom: 30px;
+    }
+  }
+
+  @media (max-width: #{map-get($breakpoints, 'sm')}) {
+    &__inner {
+      overflow: hidden auto;
+      max-width: unset;
     }
   }
 }

@@ -11,3 +11,13 @@ $color-pink: #EF5DA8;
 $main-font: 'Inter 400', sans-serif;
 $main-font-bold: 'Inter 600', sans-serif;
 $main-font-black: 'Inter 700', sans-serif;
+
+$breakpoints: (
+	"xxs": 360px,
+	"xs": 600px - 1,
+	"sm": 798px - 1,
+	"md": 1080px - 1,
+	"lg": 1280px - 1,
+	"xl": 1500px - 1,
+	"xxl": 1600px,
+);

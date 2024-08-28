@@ -9,19 +9,26 @@
       type="text" 
       placeholder="Add new todo..."
       @focus="inputFocus = true"
-      @blur="inputFocus = false"
+      @blur="hideButtonWithDelay"
     >
     <button
       v-if="inputFocus"
+      :disabled="!isValidTask"
       class="form__button btn"
     >
       Submit
     </button>
+    <p
+      v-if="inputFocus && newTask.length > 0 && !isValidTask"
+      class="form__error"
+    >
+      Please enter at&nbsp;least 3&nbsp;characters including letters or&nbsp;numbers.
+    </p>
   </form>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
 
 export default {
@@ -29,6 +36,14 @@ export default {
     const store = useStore();
     const newTask = ref('');
     const inputFocus = ref(false);
+
+    const isValidTask = computed(() => {
+      const trimmedTask = newTask.value.trim();
+      return (
+        trimmedTask.length > 3 && 
+        /[a-zA-Z0-9]/.test(trimmedTask)
+      );
+    });
 
     const submitTask = () => {
       if (newTask.value.trim()) {
@@ -40,10 +55,18 @@ export default {
       }
     };
 
+    const hideButtonWithDelay = () => {
+      setTimeout(() => {
+        inputFocus.value = false;
+      }, 100);
+    };
+
     return { 
       newTask, 
       inputFocus,
-      submitTask
+      isValidTask,
+      submitTask,
+      hideButtonWithDelay
     };
   },
 };
@@ -51,13 +74,15 @@ export default {
 
 <style lang="scss" scoped>
 .form {
+  position: relative;
+
   display: flex;
   justify-content: space-between;
   gap: 16px;
 
   width: 100%;
   height: 50px;
-  margin-bottom: 50px;
+  margin-bottom: 60px;
 
   &__input {
     font-family: $main-font;
@@ -100,6 +125,25 @@ export default {
       background-color: $color-white;
       border-color: $color-blue;
     }
+
+    &:disabled {
+      pointer-events: none;
+      opacity: 0.3;
+    }
+  }
+
+  &__error {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+
+    font-family: $main-font-bold;
+    font-size: clamp(10px, 2vw, 12px);
+    color: red;
+  }
+
+  @media (max-width: #{map-get($breakpoints, 'xs')}) {
+    margin-bottom: 20px;
   }
 }
 </style>
